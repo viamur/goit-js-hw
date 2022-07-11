@@ -1,25 +1,27 @@
 {{#each this}}
-  <a class='card-link' href={{this.largeImageURL}}>
-    <div class='photo-card'>
-      <img src={{this.webformatURL}} alt={{this.tags}} loading='lazy' />
-      <div class='info'>
-        <p class='info-item'>
-          <b>Likes</b>
-          {{this.likes}}
-        </p>
-        <p class='info-item'>
-          <b>Views</b>
-          {{this.views}}
-        </p>
-        <p class='info-item'>
-          <b>Comments</b>
-          {{this.comments}}
-        </p>
-        <p class='info-item'>
-          <b>Downloads</b>
-          {{this.downloads}}
-        </p>
-      </div>
+  <div class='photo-card'>
+    <a class='card-link' href={{this.largeImageURL}}>
+      <img src={{this.webformatURL}} alt='{{this.tags}}' loading='lazy' />
+    </a>
+    <div class='info'>
+      <p class='info-item'>
+        <b>Likes</b>
+        {{this.likes}}
+      </p>
+      <p class='info-item'>
+        <b>Views</b>
+        {{this.views}}
+      </p>
+      <p class='info-item'>
+        <b>Comments</b>
+        {{this.comments}}
+      </p>
+      <p class='info-item'>
+        <b>Downloads</b>
+        {{this.downloads}}
+      </p>
     </div>
-  </a>
+
+  </div>
+
 {{/each}}

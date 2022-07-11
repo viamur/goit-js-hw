@@ -1,14 +1,17 @@
 import axios from 'axios';
 
-export class galleryApi {
+export class GalleryApi {
   #BASE_URL = 'https://pixabay.com/api/';
   #API_KEY = '28511639-fd0b78e787d23185784d45556';
 
   constructor() {
     this.page = 1;
     this.quary = null;
+    this.totalPages = 0;
+    this.totalHits = 0;
   }
-  fetchGalley() {
+
+  async fetchGalley() {
     const search = new URLSearchParams({
       key: this.#API_KEY,
       q: this.quary,
@@ -18,12 +21,18 @@ export class galleryApi {
       orientation: 'horizontal',
       safesearch: 'true',
     });
-    return axios
-      .get(`${this.#BASE_URL}?${search}`)
-      .then(response => {
-        return response.data.hits;
-      })
-      .catch(err => console.log(err));
+    try {
+      const response = await axios.get(`${this.#BASE_URL}?${search}`);
+      this.totalPages = Math.ceil(response.data.totalHits / 40);
+      this.totalHits = response.data.totalHits;
+      return response.data.hits;
+    } catch (error) {
+      console.log(error);
+    }
+  }
+
+  resetPage() {
+    this.page = 1;
   }
 
   increasePage() {
@@ -32,5 +41,9 @@ export class galleryApi {
 
   setQuary(quary) {
     this.quary = quary;
+  }
+
+  getTotalHits() {
+    return this.totalHits;
   }
 }

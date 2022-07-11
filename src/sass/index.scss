@@ -37,3 +37,29 @@ form#search-form {
 body {
   margin: 0;
 }
+.gallery {
+  display: flex;
+  gap: 30px;
+  padding: 30px;
+  flex-wrap: wrap;
+  align-items: stretch;
+  justify-content: space-between;
+}
+.photo-card {
+  width: calc((100% / 4) - 30px);
+  height: 350px;
+  border: 1px solid lightgray;
+}
+img {
+  width: 100%;
+  height: calc(100% - 90px);
+  display: block;
+  object-fit: cover;
+}
+.info {
+  display: flex;
+  padding: 10px;
+}
+p.info-item {
+  text-align: center;
+}
