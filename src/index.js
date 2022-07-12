@@ -10,6 +10,7 @@ const gallery = document.querySelector('.gallery');
 const message = {
   textNotFound: '"Sorry, there are no images matching your search query. Please try again."',
   textLastPage: "We're sorry, but you've reached the end of search results.",
+  textEmptyInput: 'Empty request, make your choice',
 
   notFound() {
     Notify.failure(this.textNotFound);
@@ -19,6 +20,9 @@ const message = {
   },
   totalHits(value) {
     Notify.info(`Hooray! We found ${value} images.`);
+  },
+  emptyInput() {
+    Notify.failure(this.textEmptyInput);
   },
 };
 
@@ -70,15 +74,19 @@ const startIntersectionObserver = () => {
 
 const onSubmitForm = async e => {
   e.preventDefault();
-  gallery.innerHTML = '';
-  galleryClass.resetPage();
-
   const { searchQuery } = e.currentTarget.elements;
-  galleryClass.setQuary(searchQuery.value.trim());
-  await fetchAndRender();
-  if (galleryClass.getTotalHits() !== 0) {
-    message.totalHits(galleryClass.getTotalHits());
-    startIntersectionObserver();
+  if (searchQuery.value.trim().length !== 0) {
+    gallery.innerHTML = '';
+    galleryClass.resetPage();
+
+    galleryClass.setQuary(searchQuery.value.trim());
+    await fetchAndRender();
+    if (galleryClass.getTotalHits() !== 0) {
+      message.totalHits(galleryClass.getTotalHits());
+      startIntersectionObserver();
+    }
+  } else {
+    message.emptyInput();
   }
 };
 
